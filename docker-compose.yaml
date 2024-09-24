@@ -1,0 +1,16 @@
+version: '3.6'
+services:
+  hasura:
+    image: hasura/graphql-engine:v2.43.0
+    ports:
+      - "8080:8080"
+    restart: always
+    volumes:
+      - ./docker/hasura_metadata:/hasura-metadata
+      - ./docker/hasura_migrations:/hasura-migrations
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: postgres://<username>:<password>@<postgres-host>:<postgres-port>/<database-name>
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
+      HASURA_GRAPHQL_ADMIN_SECRET: <admin-secret>
+      HASURA_GRAPHQL_ENABLE_ALLOWLIST: "true"
+      HASURA_GRAPHQL_JWT_SECRET: '{"type": "HS256", "key": "<jwt-secret>"}'
